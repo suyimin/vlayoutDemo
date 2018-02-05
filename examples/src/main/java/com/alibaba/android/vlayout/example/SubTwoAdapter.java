@@ -2,7 +2,9 @@ package com.alibaba.android.vlayout.example;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
@@ -10,7 +12,10 @@ import com.alibaba.android.vlayout.DelegateAdapter;
 import com.alibaba.android.vlayout.LayoutHelper;
 import com.alibaba.android.vlayout.VirtualLayoutManager;
 
-public class SubTwoAdapter extends DelegateAdapter.Adapter<ListFragment.MainViewHolder> {
+import butterknife.Bind;
+import butterknife.ButterKnife;
+
+public class SubTwoAdapter extends DelegateAdapter.Adapter<SubTwoAdapter.TwoViewHolder> {
 
     private Context mContext;
 
@@ -38,24 +43,38 @@ public class SubTwoAdapter extends DelegateAdapter.Adapter<ListFragment.MainView
     }
 
     @Override
-    public ListFragment.MainViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new ListFragment.MainViewHolder(LayoutInflater.from(mContext).inflate(R.layout.item_two, parent, false));
+    public TwoViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        return new TwoViewHolder(LayoutInflater.from(mContext).inflate(R.layout.item_two, parent, false));
     }
 
     @Override
-    public void onBindViewHolder(ListFragment.MainViewHolder holder, int position) {
+    public void onBindViewHolder(TwoViewHolder holder, int position) {
         holder.itemView.setLayoutParams(
                 new VirtualLayoutManager.LayoutParams(mLayoutParams));
     }
 
 
     @Override
-    protected void onBindViewHolderWithOffset(ListFragment.MainViewHolder holder, int position, int offsetTotal) {
-        ((TextView) holder.itemView.findViewById(R.id.title)).setText(Integer.toString(offsetTotal));
+    protected void onBindViewHolderWithOffset(TwoViewHolder holder, int position, int offsetTotal) {
+        holder.tvTitle.setText("Permission denied.");
+        holder.tvTime.setText("2018-01-14 10:00");
     }
 
     @Override
     public int getItemCount() {
         return mCount;
+    }
+
+    class TwoViewHolder extends RecyclerView.ViewHolder {
+
+        @Bind(R.id.tvTitle)
+        TextView tvTitle;
+        @Bind(R.id.tvTime)
+        TextView tvTime;
+
+        public TwoViewHolder(View itemView) {
+            super(itemView);
+            ButterKnife.bind(this, itemView);
+        }
     }
 }
