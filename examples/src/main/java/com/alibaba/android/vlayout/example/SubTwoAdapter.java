@@ -10,7 +10,7 @@ import com.alibaba.android.vlayout.DelegateAdapter;
 import com.alibaba.android.vlayout.LayoutHelper;
 import com.alibaba.android.vlayout.VirtualLayoutManager;
 
-public class SubTwoAdapter extends DelegateAdapter.Adapter<VLayoutActivity.MainViewHolder> {
+public class SubTwoAdapter extends DelegateAdapter.Adapter<ListFragment.MainViewHolder> {
 
     private Context mContext;
 
@@ -38,19 +38,19 @@ public class SubTwoAdapter extends DelegateAdapter.Adapter<VLayoutActivity.MainV
     }
 
     @Override
-    public VLayoutActivity.MainViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new VLayoutActivity.MainViewHolder(LayoutInflater.from(mContext).inflate(R.layout.item_two, parent, false));
+    public ListFragment.MainViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        return new ListFragment.MainViewHolder(LayoutInflater.from(mContext).inflate(R.layout.item_two, parent, false));
     }
 
     @Override
-    public void onBindViewHolder(VLayoutActivity.MainViewHolder holder, int position) {
+    public void onBindViewHolder(ListFragment.MainViewHolder holder, int position) {
         holder.itemView.setLayoutParams(
                 new VirtualLayoutManager.LayoutParams(mLayoutParams));
     }
 
 
     @Override
-    protected void onBindViewHolderWithOffset(VLayoutActivity.MainViewHolder holder, int position, int offsetTotal) {
+    protected void onBindViewHolderWithOffset(ListFragment.MainViewHolder holder, int position, int offsetTotal) {
         ((TextView) holder.itemView.findViewById(R.id.title)).setText(Integer.toString(offsetTotal));
     }
 

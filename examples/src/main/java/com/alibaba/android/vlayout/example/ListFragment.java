@@ -51,7 +51,7 @@ public class ListFragment extends Fragment {
         final GridLayoutHelper helper1 = new GridLayoutHelper(1, 1);
         adapters.add(new SubTwoAdapter(getActivity(), helper1, 1) {
             @Override
-            public void onBindViewHolder(VLayoutActivity.MainViewHolder holder, int position) {
+            public void onBindViewHolder(MainViewHolder holder, int position) {
                 super.onBindViewHolder(holder, position);
                 VirtualLayoutManager.LayoutParams layoutParams = new VirtualLayoutManager.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
                 layoutParams.leftMargin = 12;
@@ -63,7 +63,7 @@ public class ListFragment extends Fragment {
         final GridLayoutHelper helper2 = new GridLayoutHelper(2, 4);
         adapters.add(new SubOneAdapter(getActivity(), helper2, 4) {
             @Override
-            public void onBindViewHolder(VLayoutActivity.MainViewHolder holder, int position) {
+            public void onBindViewHolder(MainViewHolder holder, int position) {
                 super.onBindViewHolder(holder, position);
                 VirtualLayoutManager.LayoutParams layoutParams = new VirtualLayoutManager.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
                 layoutParams.leftMargin = 12;
@@ -92,6 +92,24 @@ public class ListFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         ButterKnife.unbind(this);
+    }
+
+    static class MainViewHolder extends RecyclerView.ViewHolder {
+
+        public static volatile int existing = 0;
+        public static int createdTimes = 0;
+
+        public MainViewHolder(View itemView) {
+            super(itemView);
+            createdTimes++;
+            existing++;
+        }
+
+        @Override
+        protected void finalize() throws Throwable {
+            existing--;
+            super.finalize();
+        }
     }
 
 }
