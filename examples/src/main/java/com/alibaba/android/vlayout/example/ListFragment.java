@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import com.alibaba.android.vlayout.DelegateAdapter;
 import com.alibaba.android.vlayout.VirtualLayoutManager;
 import com.alibaba.android.vlayout.layout.GridLayoutHelper;
+import com.alibaba.android.vlayout.layout.LinearLayoutHelper;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -64,7 +65,7 @@ public class ListFragment extends Fragment {
             GridLayoutHelper helper1 = new GridLayoutHelper(1, 1);
             adapters.add(new SubOneAdapter(getActivity(), helper1, 1) {
                 @Override
-                public void onBindViewHolder(SubOneAdapter.OneViewHolder holder, int position) {
+                public void onBindViewHolder(OneViewHolder holder, int position) {
                     super.onBindViewHolder(holder, position);
                     VirtualLayoutManager.LayoutParams layoutParams = new VirtualLayoutManager.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
                     layoutParams.leftMargin = 36;
@@ -75,7 +76,7 @@ public class ListFragment extends Fragment {
             GridLayoutHelper helper2 = new GridLayoutHelper(2, 2);
             adapters.add(new SubTwoAdapter(getActivity(), helper2, 2) {
                 @Override
-                public void onBindViewHolder(SubTwoAdapter.TwoViewHolder holder, int position) {
+                public void onBindViewHolder(TwoViewHolder holder, int position) {
                     super.onBindViewHolder(holder, position);
                     VirtualLayoutManager.LayoutParams layoutParams = new VirtualLayoutManager.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
                     if (position % 2 == 0) {
@@ -94,7 +95,7 @@ public class ListFragment extends Fragment {
             GridLayoutHelper helper3 = new GridLayoutHelper(1, 1);
             adapters.add(new SubOneAdapter(getActivity(), helper3, 1) {
                 @Override
-                public void onBindViewHolder(SubOneAdapter.OneViewHolder holder, int position) {
+                public void onBindViewHolder(OneViewHolder holder, int position) {
                     super.onBindViewHolder(holder, position);
                     VirtualLayoutManager.LayoutParams layoutParams = new VirtualLayoutManager.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
                     layoutParams.leftMargin = 36;
@@ -107,7 +108,7 @@ public class ListFragment extends Fragment {
                 GridLayoutHelper helper4 = new GridLayoutHelper(1, 1);
                 adapters.add(new SubOneAdapter(getActivity(), helper4, 2) {
                     @Override
-                    public void onBindViewHolder(SubOneAdapter.OneViewHolder holder, int position) {
+                    public void onBindViewHolder(OneViewHolder holder, int position) {
                         super.onBindViewHolder(holder, position);
                         VirtualLayoutManager.LayoutParams layoutParams = new VirtualLayoutManager.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
                         layoutParams.leftMargin = 36;
@@ -119,7 +120,7 @@ public class ListFragment extends Fragment {
                 GridLayoutHelper helper5 = new GridLayoutHelper(2, 2);
                 adapters.add(new SubTwoAdapter(getActivity(), helper5, 2) {
                     @Override
-                    public void onBindViewHolder(SubTwoAdapter.TwoViewHolder holder, int position) {
+                    public void onBindViewHolder(TwoViewHolder holder, int position) {
                         super.onBindViewHolder(holder, position);
                         VirtualLayoutManager.LayoutParams layoutParams = new VirtualLayoutManager.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
                         if (position % 2 == 0) {
@@ -134,7 +135,49 @@ public class ListFragment extends Fragment {
                 });
             }
         }
-
+        //即将直播
+        LinearLayoutHelper layoutHelper = new LinearLayoutHelper();
+        layoutHelper.setMargin(36, 110, 36, 20);
+        adapters.add(new TitleAdapter(getActivity(), layoutHelper, 1) {
+            @Override
+            public void onBindViewHolder(final TitleViewHolder holder, int position) {
+                super.onBindViewHolder(holder, position);
+            }
+        });
+        GridLayoutHelper helperUpcoming = new GridLayoutHelper(1, 4);
+        adapters.add(new SubComingAdapter(getActivity(), helperUpcoming, 4) {
+            @Override
+            public void onBindViewHolder(ComingViewHolder holder, int position) {
+                super.onBindViewHolder(holder, position);
+                VirtualLayoutManager.LayoutParams layoutParams = new VirtualLayoutManager.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                layoutParams.leftMargin = 36;
+                layoutParams.rightMargin = 36;
+                layoutParams.topMargin = 12;
+                layoutParams.bottomMargin = 12;
+                holder.itemView.setLayoutParams(layoutParams);
+            }
+        });
+        //精彩回看
+        LinearLayoutHelper backHelper = new LinearLayoutHelper();
+        backHelper.setMargin(36, 110, 36, 20);
+        adapters.add(new TitleAdapter(getActivity(), backHelper, 1) {
+            @Override
+            public void onBindViewHolder(final TitleViewHolder holder, int position) {
+                super.onBindViewHolder(holder, position);
+                holder.tvTitle.setText("精彩回看");
+            }
+        });
+        GridLayoutHelper helperBack = new GridLayoutHelper(2, 6);
+        adapters.add(new SubBackAdapter(getActivity(), helperBack, 6) {
+            @Override
+            public void onBindViewHolder(BackViewHolder holder, int position) {
+                super.onBindViewHolder(holder, position);
+                VirtualLayoutManager.LayoutParams layoutParams = new VirtualLayoutManager.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                layoutParams.leftMargin = 36;
+                layoutParams.rightMargin = 36;
+                holder.itemView.setLayoutParams(layoutParams);
+            }
+        });
         delegateAdapter.setAdapters(adapters);
         return view;
     }
