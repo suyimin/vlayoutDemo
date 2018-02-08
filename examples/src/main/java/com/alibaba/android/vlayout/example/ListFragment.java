@@ -1,14 +1,18 @@
 package com.alibaba.android.vlayout.example;
 
+import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.alibaba.android.vlayout.DelegateAdapter;
+import com.alibaba.android.vlayout.LayoutHelper;
 import com.alibaba.android.vlayout.VirtualLayoutManager;
 import com.alibaba.android.vlayout.layout.GridLayoutHelper;
 import com.alibaba.android.vlayout.layout.LinearLayoutHelper;
@@ -63,9 +67,9 @@ public class ListFragment extends Fragment {
 
         for (int i = 0; i < quotient; i++) {
             GridLayoutHelper helper1 = new GridLayoutHelper(1, 1);
-            adapters.add(new SubOneAdapter(getActivity(), helper1, 1) {
+            adapters.add(new SubAdapter(getActivity(), helper1, 1) {
                 @Override
-                public void onBindViewHolder(OneViewHolder holder, int position) {
+                public void onBindViewHolder(MainViewHolder holder, int position) {
                     super.onBindViewHolder(holder, position);
                     VirtualLayoutManager.LayoutParams layoutParams = new VirtualLayoutManager.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
                     layoutParams.leftMargin = 36;
@@ -74,9 +78,9 @@ public class ListFragment extends Fragment {
                 }
             });
             GridLayoutHelper helper2 = new GridLayoutHelper(2, 2);
-            adapters.add(new SubTwoAdapter(getActivity(), helper2, 2) {
+            adapters.add(new SubAdapter(getActivity(), helper2, 2) {
                 @Override
-                public void onBindViewHolder(TwoViewHolder holder, int position) {
+                public void onBindViewHolder(MainViewHolder holder, int position) {
                     super.onBindViewHolder(holder, position);
                     VirtualLayoutManager.LayoutParams layoutParams = new VirtualLayoutManager.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
                     if (position % 2 == 0) {
@@ -93,9 +97,9 @@ public class ListFragment extends Fragment {
 
         if (remainder == 1) {
             GridLayoutHelper helper3 = new GridLayoutHelper(1, 1);
-            adapters.add(new SubOneAdapter(getActivity(), helper3, 1) {
+            adapters.add(new SubAdapter(getActivity(), helper3, 1) {
                 @Override
-                public void onBindViewHolder(OneViewHolder holder, int position) {
+                public void onBindViewHolder(MainViewHolder holder, int position) {
                     super.onBindViewHolder(holder, position);
                     VirtualLayoutManager.LayoutParams layoutParams = new VirtualLayoutManager.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
                     layoutParams.leftMargin = 36;
@@ -106,9 +110,9 @@ public class ListFragment extends Fragment {
         } else if (remainder == 2) {
             if (quotient == 0) {
                 GridLayoutHelper helper4 = new GridLayoutHelper(1, 1);
-                adapters.add(new SubOneAdapter(getActivity(), helper4, 2) {
+                adapters.add(new SubAdapter(getActivity(), helper4, 2) {
                     @Override
-                    public void onBindViewHolder(OneViewHolder holder, int position) {
+                    public void onBindViewHolder(MainViewHolder holder, int position) {
                         super.onBindViewHolder(holder, position);
                         VirtualLayoutManager.LayoutParams layoutParams = new VirtualLayoutManager.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
                         layoutParams.leftMargin = 36;
@@ -118,9 +122,9 @@ public class ListFragment extends Fragment {
                 });
             } else {
                 GridLayoutHelper helper5 = new GridLayoutHelper(2, 2);
-                adapters.add(new SubTwoAdapter(getActivity(), helper5, 2) {
+                adapters.add(new SubAdapter(getActivity(), helper5, 2) {
                     @Override
-                    public void onBindViewHolder(TwoViewHolder holder, int position) {
+                    public void onBindViewHolder(MainViewHolder holder, int position) {
                         super.onBindViewHolder(holder, position);
                         VirtualLayoutManager.LayoutParams layoutParams = new VirtualLayoutManager.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
                         if (position % 2 == 0) {
@@ -138,16 +142,16 @@ public class ListFragment extends Fragment {
         //即将直播
         LinearLayoutHelper layoutHelper = new LinearLayoutHelper();
         layoutHelper.setMargin(36, 110, 36, 20);
-        adapters.add(new TitleAdapter(getActivity(), layoutHelper, 1) {
+        adapters.add(new SubAdapter(getActivity(), layoutHelper, 1) {
             @Override
-            public void onBindViewHolder(final TitleViewHolder holder, int position) {
+            public void onBindViewHolder(final MainViewHolder holder, int position) {
                 super.onBindViewHolder(holder, position);
             }
         });
         GridLayoutHelper helperUpcoming = new GridLayoutHelper(1, 4);
-        adapters.add(new SubComingAdapter(getActivity(), helperUpcoming, 4) {
+        adapters.add(new SubAdapter(getActivity(), helperUpcoming, 4) {
             @Override
-            public void onBindViewHolder(ComingViewHolder holder, int position) {
+            public void onBindViewHolder(MainViewHolder holder, int position) {
                 super.onBindViewHolder(holder, position);
                 VirtualLayoutManager.LayoutParams layoutParams = new VirtualLayoutManager.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
                 layoutParams.leftMargin = 36;
@@ -160,17 +164,22 @@ public class ListFragment extends Fragment {
         //精彩回看
         LinearLayoutHelper backHelper = new LinearLayoutHelper();
         backHelper.setMargin(36, 110, 36, 20);
-        adapters.add(new TitleAdapter(getActivity(), backHelper, 1) {
+        adapters.add(new SubAdapter(getActivity(), backHelper, 1) {
             @Override
-            public void onBindViewHolder(final TitleViewHolder holder, int position) {
+            public void onBindViewHolder(final MainViewHolder holder, int position) {
                 super.onBindViewHolder(holder, position);
-                holder.tvTitle.setText("精彩回看");
             }
+
+            @Override
+            protected void onBindViewHolderWithOffset(MainViewHolder holder, int position, int offsetTotal) {
+                ((TextView) holder.itemView.findViewById(R.id.tvTitle)).setText("精彩回看");
+            }
+
         });
         GridLayoutHelper helperBack = new GridLayoutHelper(2, 6);
-        adapters.add(new SubBackAdapter(getActivity(), helperBack, 6) {
+        adapters.add(new SubAdapter(getActivity(), helperBack, 6) {
             @Override
-            public void onBindViewHolder(BackViewHolder holder, int position) {
+            public void onBindViewHolder(MainViewHolder holder, int position) {
                 super.onBindViewHolder(holder, position);
                 VirtualLayoutManager.LayoutParams layoutParams = new VirtualLayoutManager.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
                 layoutParams.leftMargin = 36;
@@ -197,6 +206,75 @@ public class ListFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         ButterKnife.unbind(this);
+    }
+
+    static class SubAdapter extends DelegateAdapter.Adapter<MainViewHolder> {
+
+        public enum ITEM_TYPE {
+            ITEM_TYPE_ONE,
+            ITEM_TYPE_TWO,
+            ITEM_TYPE_COMING,
+            ITEM_TYPE_BACK,
+            ITEM_TYPE_TITLE,
+        }
+
+        private Context mContext;
+
+        private LayoutHelper mLayoutHelper;
+
+        private VirtualLayoutManager.LayoutParams mLayoutParams;
+        private int mCount = 0;
+
+
+        public SubAdapter(Context context, LayoutHelper layoutHelper, int count) {
+            this(context, layoutHelper, count, new VirtualLayoutManager.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 300));
+        }
+
+        public SubAdapter(Context context, LayoutHelper layoutHelper, int count, @NonNull VirtualLayoutManager.LayoutParams layoutParams) {
+            this.mContext = context;
+            this.mLayoutHelper = layoutHelper;
+            this.mCount = count;
+            this.mLayoutParams = layoutParams;
+        }
+
+        @Override
+        public LayoutHelper onCreateLayoutHelper() {
+            return mLayoutHelper;
+        }
+
+        @Override
+        public MainViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+            if (ITEM_TYPE.ITEM_TYPE_ONE.ordinal() == viewType) {
+                return new MainViewHolder(LayoutInflater.from(mContext).inflate(R.layout.item_one, parent, false));
+            } else if (ITEM_TYPE.ITEM_TYPE_TWO.ordinal() == viewType) {
+                return new MainViewHolder(LayoutInflater.from(mContext).inflate(R.layout.item_two, parent, false));
+            } else if (ITEM_TYPE.ITEM_TYPE_COMING.ordinal() == viewType) {
+                return new MainViewHolder(LayoutInflater.from(mContext).inflate(R.layout.item_coming, parent, false));
+            } else if (ITEM_TYPE.ITEM_TYPE_BACK.ordinal() == viewType) {
+                return new MainViewHolder(LayoutInflater.from(mContext).inflate(R.layout.item_back, parent, false));
+            } else {
+                return new MainViewHolder(LayoutInflater.from(mContext).inflate(R.layout.item_title, parent, false));
+            }
+        }
+
+        @Override
+        public void onBindViewHolder(MainViewHolder holder, int position) {
+            holder.itemView.setLayoutParams(
+                    new VirtualLayoutManager.LayoutParams(mLayoutParams));
+        }
+
+        @Override
+        public int getItemCount() {
+            return mCount;
+        }
+    }
+
+    static class MainViewHolder extends RecyclerView.ViewHolder {
+
+        public MainViewHolder(View itemView) {
+            super(itemView);
+        }
+
     }
 
 }
