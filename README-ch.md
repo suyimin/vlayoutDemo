@@ -150,6 +150,6 @@ recycler.setAdapter(myAdapter);
 
 ![](http://img3.tbcdn.cn/L1/461/1/1b9bfb42009047f75cee08ae741505de2c74ac0a)
 
-<img src="https://github.com/suyimin/vlayoutDemo/blob/master/multi_item.webp" width="25%" height="25%" />
+<img src="https://github.com/suyimin/vlayoutDemo/blob/master/multi_item.webp" width="50%" height="50%" />
 
 [Demo工程](https://github.com/suyimin/vlayoutDemo/tree/master/examples)
