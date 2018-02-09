@@ -16,7 +16,6 @@ import com.alibaba.android.vlayout.DelegateAdapter;
 import com.alibaba.android.vlayout.LayoutHelper;
 import com.alibaba.android.vlayout.VirtualLayoutManager;
 import com.alibaba.android.vlayout.layout.GridLayoutHelper;
-import com.alibaba.android.vlayout.layout.LinearLayoutHelper;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -73,11 +72,7 @@ public class Fragment1 extends Fragment {
             mLists.addAll(mComingLists);
         }
         mLists.add(new String());
-        if (mBackLists.size() > 6) {//最多显示6个
-            mLists.addAll(mBackLists.subList(0, 6));
-        } else {
-            mLists.addAll(mBackLists);
-        }
+        mLists.addAll(mBackLists);
 
         int quotient = mLivingLists.size() / 3;
         int remainder = mLivingLists.size() % 3;
@@ -232,9 +227,14 @@ public class Fragment1 extends Fragment {
             }
         }
         //即将直播
-        LinearLayoutHelper layoutHelper = new LinearLayoutHelper();
+        GridLayoutHelper layoutHelper = new GridLayoutHelper(1, 1);
         layoutHelper.setMargin(36, 110, 36, 20);
         adapters.add(new SubAdapter(getActivity(), layoutHelper, 1) {
+
+            @Override
+            public int getItemViewType(int position) {
+                return 0;
+            }
 
             @Override
             public void onBindViewHolder(final MainViewHolder holder, int position) {
@@ -243,6 +243,7 @@ public class Fragment1 extends Fragment {
 
             @Override
             protected void onBindViewHolderWithOffset(MainViewHolder holder, int position, int offsetTotal) {
+                ((TextView) holder.itemView.findViewById(R.id.tvTitle)).setText("即将直播");
                 holder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -275,10 +276,16 @@ public class Fragment1 extends Fragment {
                 ((TextView) holder.itemView.findViewById(R.id.tvTitle)).setText(String.valueOf(position));
             }
         });
+
         //精彩回看
-        LinearLayoutHelper backHelper = new LinearLayoutHelper();
+        GridLayoutHelper backHelper = new GridLayoutHelper(1, 1);
         backHelper.setMargin(36, 110, 36, 20);
         adapters.add(new SubAdapter(getActivity(), backHelper, 1) {
+
+            @Override
+            public int getItemViewType(int position) {
+                return 0;
+            }
 
             @Override
             public void onBindViewHolder(final MainViewHolder holder, int position) {
@@ -297,8 +304,9 @@ public class Fragment1 extends Fragment {
             }
 
         });
-        GridLayoutHelper helperBack = new GridLayoutHelper(2, mBackLists.size() > 6 ? 6 : mBackLists.size());
-        adapters.add(new SubAdapter(getActivity(), helperBack, mBackLists.size() > 6 ? 6 : mBackLists.size()) {
+
+        GridLayoutHelper helperBack = new GridLayoutHelper(2, mBackLists.size());
+        adapters.add(new SubAdapter(getActivity(), helperBack, mBackLists.size()) {
 
             @Override
             public int getItemViewType(int position) {

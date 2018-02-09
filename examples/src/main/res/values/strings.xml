@@ -24,4 +24,5 @@
 
 <resources>
     <string name="app_name">VirtualLayout</string>
+    <string name="more">More</string>
 </resources>
