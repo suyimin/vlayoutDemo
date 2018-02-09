@@ -83,12 +83,16 @@ public class ListFragment extends Fragment {
 
 
         final VirtualLayoutManager layoutManager = new VirtualLayoutManager(getActivity());
-        layoutManager.setRecycleOffset(300);
+        layoutManager.setRecycleOffset(50);
         recyclerView.setLayoutManager(layoutManager);
 
         final RecyclerView.RecycledViewPool viewPool = new RecyclerView.RecycledViewPool();
         recyclerView.setRecycledViewPool(viewPool);
-        viewPool.setMaxRecycledViews(0, 20);
+        viewPool.setMaxRecycledViews(0, 10);
+        viewPool.setMaxRecycledViews(1, 10);
+        viewPool.setMaxRecycledViews(2, 10);
+        viewPool.setMaxRecycledViews(3, 10);
+        viewPool.setMaxRecycledViews(4, 2);
 
         final DelegateAdapter delegateAdapter = new DelegateAdapter(layoutManager, true);
         recyclerView.setAdapter(delegateAdapter);
@@ -98,6 +102,11 @@ public class ListFragment extends Fragment {
         for (int i = 0; i < quotient; i++) {
             GridLayoutHelper helper1 = new GridLayoutHelper(1, 1);
             adapters.add(new SubAdapter(getActivity(), helper1, 1) {
+
+                @Override
+                public int getItemViewType(int position) {
+                    return 1;
+                }
 
                 @Override
                 public void onBindViewHolder(MainViewHolder holder, int position) {
@@ -110,6 +119,16 @@ public class ListFragment extends Fragment {
             });
             GridLayoutHelper helper2 = new GridLayoutHelper(2, 2);
             adapters.add(new SubAdapter(getActivity(), helper2, 2) {
+
+                @Override
+                public int getItemViewType(int position) {
+                    return 2;
+                }
+
+                @Override
+                public MainViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+                    return new MainViewHolder(LayoutInflater.from(getActivity()).inflate(R.layout.item_two, parent, false));
+                }
 
                 @Override
                 public void onBindViewHolder(MainViewHolder holder, int position) {
@@ -132,6 +151,11 @@ public class ListFragment extends Fragment {
             adapters.add(new SubAdapter(getActivity(), helper3, 1) {
 
                 @Override
+                public int getItemViewType(int position) {
+                    return 1;
+                }
+
+                @Override
                 public void onBindViewHolder(MainViewHolder holder, int position) {
                     super.onBindViewHolder(holder, position);
                     VirtualLayoutManager.LayoutParams layoutParams = new VirtualLayoutManager.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -145,6 +169,10 @@ public class ListFragment extends Fragment {
                 GridLayoutHelper helper4 = new GridLayoutHelper(1, 1);
                 adapters.add(new SubAdapter(getActivity(), helper4, 2) {
 
+                    @Override
+                    public int getItemViewType(int position) {
+                        return 1;
+                    }
 
                     @Override
                     public void onBindViewHolder(MainViewHolder holder, int position) {
@@ -158,6 +186,11 @@ public class ListFragment extends Fragment {
             } else {
                 GridLayoutHelper helper5 = new GridLayoutHelper(2, 2);
                 adapters.add(new SubAdapter(getActivity(), helper5, 2) {
+
+                    @Override
+                    public int getItemViewType(int position) {
+                        return 1;
+                    }
 
                     @Override
                     public void onBindViewHolder(MainViewHolder holder, int position) {
@@ -189,6 +222,11 @@ public class ListFragment extends Fragment {
         adapters.add(new SubAdapter(getActivity(), helperUpcoming, mComingLists.size() > 4 ? 4 : mComingLists.size()) {
 
             @Override
+            public int getItemViewType(int position) {
+                return 3;
+            }
+
+            @Override
             public void onBindViewHolder(MainViewHolder holder, int position) {
                 super.onBindViewHolder(holder, position);
                 VirtualLayoutManager.LayoutParams layoutParams = new VirtualLayoutManager.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -217,6 +255,11 @@ public class ListFragment extends Fragment {
         });
         GridLayoutHelper helperBack = new GridLayoutHelper(2, mBackLists.size() > 6 ? 6 : mBackLists.size());
         adapters.add(new SubAdapter(getActivity(), helperBack, mBackLists.size() > 6 ? 6 : mBackLists.size()) {
+
+            @Override
+            public int getItemViewType(int position) {
+                return 4;
+            }
 
             @Override
             public void onBindViewHolder(MainViewHolder holder, int position) {
@@ -276,7 +319,17 @@ public class ListFragment extends Fragment {
 
         @Override
         public MainViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            return new MainViewHolder(LayoutInflater.from(mContext).inflate(R.layout.item_one, parent, false));
+            if (1 == viewType) {
+                return new MainViewHolder(LayoutInflater.from(mContext).inflate(R.layout.item_one, parent, false));
+            } else if (2 == viewType) {
+                return new MainViewHolder(LayoutInflater.from(mContext).inflate(R.layout.item_two, parent, false));
+            } else if (3 == viewType) {
+                return new MainViewHolder(LayoutInflater.from(mContext).inflate(R.layout.item_coming, parent, false));
+            } else if (4 == viewType) {
+                return new MainViewHolder(LayoutInflater.from(mContext).inflate(R.layout.item_back, parent, false));
+            } else {
+                return new MainViewHolder(LayoutInflater.from(mContext).inflate(R.layout.item_title, parent, false));
+            }
         }
 
         @Override
