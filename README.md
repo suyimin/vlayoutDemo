@@ -151,6 +151,6 @@ Add following configs in your proguard file if your app is released with proguar
 
 ![](http://img3.tbcdn.cn/L1/461/1/1b9bfb42009047f75cee08ae741505de2c74ac0a)
 
-![](https://github.com/suyimin/vlayoutDemo/blob/master/multi_item.png)
+![](https://github.com/suyimin/vlayoutDemo/blob/master/multi_item.webp)
 
 [Demo Project](https://github.com/suyimin/vlayoutDemo/tree/master/examples)
