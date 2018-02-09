@@ -59,7 +59,7 @@
 
         </activity>
 
-        <activity android:name="com.alibaba.android.vlayout.example.ListActivity">
+        <activity android:name="com.alibaba.android.vlayout.example.DemoActivity">
 
         </activity>
 

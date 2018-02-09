@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,7 +24,7 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class ListFragment extends Fragment {
+public class Fragment1 extends Fragment {
 
     @Bind(R.id.recyclerView)
     RecyclerView recyclerView;
@@ -217,6 +218,16 @@ public class ListFragment extends Fragment {
             public void onBindViewHolder(final MainViewHolder holder, int position) {
                 super.onBindViewHolder(holder, position);
             }
+
+            @Override
+            protected void onBindViewHolderWithOffset(MainViewHolder holder, int position, int offsetTotal) {
+                holder.itemView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        toFragment2();
+                    }
+                });
+            }
         });
         GridLayoutHelper helperUpcoming = new GridLayoutHelper(1, mComingLists.size() > 4 ? 4 : mComingLists.size());
         adapters.add(new SubAdapter(getActivity(), helperUpcoming, mComingLists.size() > 4 ? 4 : mComingLists.size()) {
@@ -350,6 +361,12 @@ public class ListFragment extends Fragment {
             super(itemView);
         }
 
+    }
+
+    private void toFragment2() {
+        FragmentManager fm = getActivity().getSupportFragmentManager();
+        Fragment fragment = new Fragment2();
+        fm.beginTransaction().add(R.id.llContainer, fragment).hide(this).addToBackStack("x").commit();
     }
 
 }
