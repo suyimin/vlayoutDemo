@@ -1,4 +1,4 @@
-# vlayout
+# vlayoutDemo
 
 [English Document](README.md)
 
@@ -150,20 +150,4 @@ recycler.setAdapter(myAdapter);
 
 ![](http://img3.tbcdn.cn/L1/461/1/1b9bfb42009047f75cee08ae741505de2c74ac0a)
 
-[Demo工程](https://github.com/alibaba/vlayout/tree/master/examples)
-
-# FAQ
-
-使用之前或者碰到问题的时候，建议先看看其他[FAQ](docs/VLayoutFAQ.md)。
-
-# 布局属性
-
-每一种layoutHelper都有自己的布局属性来控制布局样式，详情请参考[文档](docs/ATTRIBUTES-ch.md)。
-
-# 贡献代码
-
-在提 Issue 或者 PR 之前，建议先阅读[Contributing Guide](CONTRIBUTING.md)。按照规范提建议。
-
-# 开源许可证
-
-vlayout遵循MIT开源许可证协议。
+[Demo工程](https://github.com/suyimin/vlayoutDemo/tree/master/examples)

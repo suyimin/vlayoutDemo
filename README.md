@@ -1,4 +1,4 @@
-# vlayout
+# vlayoutDemo
 
 [中文文档](README-ch.md)
 
@@ -151,20 +151,4 @@ Add following configs in your proguard file if your app is released with proguar
 
 ![](http://img3.tbcdn.cn/L1/461/1/1b9bfb42009047f75cee08ae741505de2c74ac0a)
 
-[Demo Project](https://github.com/alibaba/vlayout/tree/master/examples)
-
-# FAQ
-
-Read FAQ(In Chinese language only now) before submitting issue: [FAQ](docs/VLayoutFAQ.md)。
-
-# Layout Attributes
-
-Each layoutHelper has a few attributes to control its layout style. See [this](docs/ATTRIBUTES.md) to read more.
-
-# Contributing
-
-Before you open an issue or create a pull request, please read [Contributing Guide](CONTRIBUTING.md) first.
-
-# LICENSE
-
-Vlayout is available under the MIT license.
+[Demo Project](https://github.com/suyimin/vlayoutDemo/tree/master/examples)
