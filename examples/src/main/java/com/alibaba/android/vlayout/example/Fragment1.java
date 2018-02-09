@@ -48,7 +48,7 @@ public class Fragment1 extends Fragment {
 
         mLists = new LinkedList<>();
         mLivingLists = new LinkedList<>();
-        for (int i = 0; i < 4; i++) {
+        for (int i = 0; i < 15; i++) {
             String bean = new String();
             mLivingLists.add(bean);
         }
@@ -84,16 +84,13 @@ public class Fragment1 extends Fragment {
 
 
         final VirtualLayoutManager layoutManager = new VirtualLayoutManager(getActivity());
-        layoutManager.setRecycleOffset(50);
+        layoutManager.setRecycleOffset(30);
         recyclerView.setLayoutManager(layoutManager);
 
         final RecyclerView.RecycledViewPool viewPool = new RecyclerView.RecycledViewPool();
         recyclerView.setRecycledViewPool(viewPool);
-        viewPool.setMaxRecycledViews(0, 10);
         viewPool.setMaxRecycledViews(1, 10);
         viewPool.setMaxRecycledViews(2, 10);
-        viewPool.setMaxRecycledViews(3, 10);
-        viewPool.setMaxRecycledViews(4, 2);
 
         final DelegateAdapter delegateAdapter = new DelegateAdapter(layoutManager, true);
         recyclerView.setAdapter(delegateAdapter);
@@ -116,6 +113,11 @@ public class Fragment1 extends Fragment {
                     layoutParams.leftMargin = 36;
                     layoutParams.rightMargin = 36;
                     holder.itemView.setLayoutParams(layoutParams);
+                }
+
+                @Override
+                protected void onBindViewHolderWithOffset(MainViewHolder holder, int position, int offsetTotal) {
+                    ((TextView) holder.itemView.findViewById(R.id.tvTitle)).setText(String.valueOf(position));
                 }
             });
             GridLayoutHelper helper2 = new GridLayoutHelper(2, 2);
@@ -144,6 +146,11 @@ public class Fragment1 extends Fragment {
                     }
                     holder.itemView.setLayoutParams(layoutParams);
                 }
+
+                @Override
+                protected void onBindViewHolderWithOffset(MainViewHolder holder, int position, int offsetTotal) {
+                    ((TextView) holder.itemView.findViewById(R.id.tvTitle)).setText(String.valueOf(position));
+                }
             });
         }
 
@@ -164,6 +171,11 @@ public class Fragment1 extends Fragment {
                     layoutParams.rightMargin = 36;
                     holder.itemView.setLayoutParams(layoutParams);
                 }
+
+                @Override
+                protected void onBindViewHolderWithOffset(MainViewHolder holder, int position, int offsetTotal) {
+                    ((TextView) holder.itemView.findViewById(R.id.tvTitle)).setText(String.valueOf(position));
+                }
             });
         } else if (remainder == 2) {
             if (quotient == 0) {
@@ -182,6 +194,11 @@ public class Fragment1 extends Fragment {
                         layoutParams.leftMargin = 36;
                         layoutParams.rightMargin = 36;
                         holder.itemView.setLayoutParams(layoutParams);
+                    }
+
+                    @Override
+                    protected void onBindViewHolderWithOffset(MainViewHolder holder, int position, int offsetTotal) {
+                        ((TextView) holder.itemView.findViewById(R.id.tvTitle)).setText(String.valueOf(position));
                     }
                 });
             } else {
@@ -205,6 +222,11 @@ public class Fragment1 extends Fragment {
                             layoutParams.rightMargin = 36;
                         }
                         holder.itemView.setLayoutParams(layoutParams);
+                    }
+
+                    @Override
+                    protected void onBindViewHolderWithOffset(MainViewHolder holder, int position, int offsetTotal) {
+                        ((TextView) holder.itemView.findViewById(R.id.tvTitle)).setText(String.valueOf(position));
                     }
                 });
             }
@@ -247,6 +269,11 @@ public class Fragment1 extends Fragment {
                 layoutParams.bottomMargin = 12;
                 holder.itemView.setLayoutParams(layoutParams);
             }
+
+            @Override
+            protected void onBindViewHolderWithOffset(MainViewHolder holder, int position, int offsetTotal) {
+                ((TextView) holder.itemView.findViewById(R.id.tvTitle)).setText(String.valueOf(position));
+            }
         });
         //精彩回看
         LinearLayoutHelper backHelper = new LinearLayoutHelper();
@@ -261,6 +288,12 @@ public class Fragment1 extends Fragment {
             @Override
             protected void onBindViewHolderWithOffset(MainViewHolder holder, int position, int offsetTotal) {
                 ((TextView) holder.itemView.findViewById(R.id.tvTitle)).setText("精彩回看");
+                holder.itemView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        toFragment2();
+                    }
+                });
             }
 
         });
@@ -279,6 +312,11 @@ public class Fragment1 extends Fragment {
                 layoutParams.leftMargin = 36;
                 layoutParams.rightMargin = 36;
                 holder.itemView.setLayoutParams(layoutParams);
+            }
+
+            @Override
+            protected void onBindViewHolderWithOffset(MainViewHolder holder, int position, int offsetTotal) {
+                ((TextView) holder.itemView.findViewById(R.id.tvTitle)).setText(String.valueOf(position));
             }
         });
         delegateAdapter.setAdapters(adapters);
