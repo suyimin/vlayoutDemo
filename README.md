@@ -151,7 +151,7 @@ Add following configs in your proguard file if your app is released with proguar
 
 ![](http://img3.tbcdn.cn/L1/461/1/1b9bfb42009047f75cee08ae741505de2c74ac0a)
 
-[Demo Project](https://github.com/alibaba/vlayout/tree/master/examples)
+[Demo Project](https://github.com/suyimin/vlayoutDemo/tree/master/examples)
 
 # FAQ
 
