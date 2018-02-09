@@ -28,7 +28,10 @@ public class ListFragment extends Fragment {
     @Bind(R.id.recyclerView)
     RecyclerView recyclerView;
 
-    private List<String> mLists;
+    private static List<String> mLists;
+    private static List<String> mLivingLists;
+    private static List<String> mComingLists;
+    private static List<String> mBackLists;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -43,9 +46,36 @@ public class ListFragment extends Fragment {
         ButterKnife.bind(this, view);
 
         mLists = new LinkedList<>();
+        mLivingLists = new LinkedList<>();
         for (int i = 0; i < 4; i++) {
             String bean = new String();
-            mLists.add(bean);
+            mLivingLists.add(bean);
+        }
+
+        mComingLists = new LinkedList<>();
+        for (int i = 0; i < 15; i++) {
+            String bean = new String();
+            mComingLists.add(bean);
+        }
+
+        mBackLists = new LinkedList<>();
+        for (int i = 0; i < 15; i++) {
+            String bean = new String();
+            mBackLists.add(bean);
+        }
+
+        mLists.addAll(mLivingLists);//直播中
+        mLists.add(new String());//即将直播标题
+        if (mComingLists.size() > 4) {//最多显示4个
+            mLists.addAll(mComingLists.subList(0, 4));
+        } else {
+            mLists.addAll(mComingLists);
+        }
+        mLists.add(new String());
+        if (mBackLists.size() > 6) {//最多显示6个
+            mLists.addAll(mBackLists.subList(0, 6));
+        } else {
+            mLists.addAll(mBackLists);
         }
 
         int quotient = mLists.size() / 3;
@@ -148,8 +178,8 @@ public class ListFragment extends Fragment {
                 super.onBindViewHolder(holder, position);
             }
         });
-        GridLayoutHelper helperUpcoming = new GridLayoutHelper(1, 4);
-        adapters.add(new SubAdapter(getActivity(), helperUpcoming, 4) {
+        GridLayoutHelper helperUpcoming = new GridLayoutHelper(1, mComingLists.size() > 4 ? 4 : mComingLists.size());
+        adapters.add(new SubAdapter(getActivity(), helperUpcoming, mComingLists.size() > 4 ? 4 : mComingLists.size()) {
             @Override
             public void onBindViewHolder(MainViewHolder holder, int position) {
                 super.onBindViewHolder(holder, position);
@@ -176,8 +206,8 @@ public class ListFragment extends Fragment {
             }
 
         });
-        GridLayoutHelper helperBack = new GridLayoutHelper(2, 6);
-        adapters.add(new SubAdapter(getActivity(), helperBack, 6) {
+        GridLayoutHelper helperBack = new GridLayoutHelper(2, mBackLists.size() > 6 ? 6 : mBackLists.size());
+        adapters.add(new SubAdapter(getActivity(), helperBack, mBackLists.size() > 6 ? 6 : mBackLists.size()) {
             @Override
             public void onBindViewHolder(MainViewHolder holder, int position) {
                 super.onBindViewHolder(holder, position);
@@ -261,6 +291,38 @@ public class ListFragment extends Fragment {
         public void onBindViewHolder(MainViewHolder holder, int position) {
             holder.itemView.setLayoutParams(
                     new VirtualLayoutManager.LayoutParams(mLayoutParams));
+        }
+
+        @Override
+        public int getItemViewType(int position) {
+            if (position < mLivingLists.size()) {
+                int remainder = position % 3;
+                if (mLivingLists.size() == 2) {
+                    return ITEM_TYPE.ITEM_TYPE_ONE.ordinal();
+                } else if (mLivingLists.size() % 3 == 2) {
+                    if (position == mLivingLists.size() - 1 || position == mLivingLists.size() - 2) {
+                        return ITEM_TYPE.ITEM_TYPE_TWO.ordinal();
+                    } else if (remainder == 0) {
+                        return ITEM_TYPE.ITEM_TYPE_ONE.ordinal();
+                    } else {
+                        return ITEM_TYPE.ITEM_TYPE_TWO.ordinal();
+                    }
+                } else {
+                    if (remainder == 0) {
+                        return ITEM_TYPE.ITEM_TYPE_ONE.ordinal();
+                    } else {
+                        return ITEM_TYPE.ITEM_TYPE_TWO.ordinal();
+                    }
+                }
+            } else if (position == mLivingLists.size()) {
+                return ITEM_TYPE.ITEM_TYPE_TITLE.ordinal();
+            } else if (position < mLivingLists.size() + (mComingLists.size() > 4 ? 4 : mComingLists.size())) {
+                return ITEM_TYPE.ITEM_TYPE_COMING.ordinal();
+            } else if (position == mLivingLists.size() + (mComingLists.size() > 4 ? 4 : mComingLists.size())) {
+                return ITEM_TYPE.ITEM_TYPE_TITLE.ordinal();
+            } else {
+                return ITEM_TYPE.ITEM_TYPE_BACK.ordinal();
+            }
         }
 
         @Override
