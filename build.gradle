@@ -26,12 +26,8 @@
 
 buildscript {
     repositories {
-        maven{
-            url "http://w3cloudnkg-sit1.huawei.com/ccloud/nexus/content/groups/public/"
-        }
-        maven {
-            url "http://10.68.8.60:8081/nexus/content/groups/public/"
-        }
+        google()
+        jcenter()
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:2.3.3'
@@ -44,11 +40,7 @@ buildscript {
 
 allprojects {
     repositories {
-        maven{
-            url "http://w3cloudnkg-sit1.huawei.com/ccloud/nexus/content/groups/public/"
-        }
-        maven {
-            url "http://10.68.8.60:8081/nexus/content/groups/public/"
-        }
+        google()
+        jcenter()
     }
 }
